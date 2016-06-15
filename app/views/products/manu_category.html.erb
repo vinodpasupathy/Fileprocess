@@ -1,0 +1,241 @@
+<div class="body-wrap">
+
+	<div class="body-container">
+    
+      	<div class="body-header">
+    
+          	<%=link_to $manu_name, products_manu_category_path($manu_name),:style=>"color:white;"%>
+
+        </div>
+         
+            <div class="body-content">
+         
+               <div class="container">
+         
+                  <div class="row">
+    
+                        <%unless Product.where(:manu_id=>BSON::ObjectId.from_string(params[:format])).present?%>
+                     
+                           <div class="col-md-12">
+         
+                                <ol class="breadcrumb">
+                                
+                                  <%$bread.flatten.uniq.map do|p|%>
+                                
+                                        <li><%=p.sub_cat_name%></li>
+        
+                                   <%end%>
+        
+                                </ol>
+        
+                            </div>
+                        
+                        <%end%>
+
+                    </div>
+                     
+                    <%unless Product.where(:taxonomy_id=>BSON::ObjectId.from_string(params[:format])).present?%>
+                    
+                      	<div class="row">
+                    
+                            <% @taxon.map do |i|%>
+                    
+                                <%@l1=i.id%>
+
+                                	<div class="col-md-12">
+                            	
+                                        <div class="category">
+                                	
+                                            <div class="image">
+                                    	
+                                                <img src="/assets/not.jpeg">
+                                    
+                                            </div>
+                                    
+
+                                            <div class="content">
+        
+                                              	<div class="header">
+                                            
+                                                    <%if Product.where(:manu_id=>BSON::ObjectId.from_string(params[:format])).present?%>
+                                    
+                                                        <%=link_to i.main_cat_name,products_manu_category_path(i.id),:style=>"color:white;"%>
+                                   
+                                                    <%else%>
+                                    
+
+                                                        <%=link_to i.sub_cat_name,products_manu_category_path(i.id),:style=>"color:white;"%>
+
+                                                    <%end%>
+
+                                                </div>
+                                        
+                                                <ul>
+                                                    <%@manu_taxon=$taxonomy.where(:parent_id=>i.id)%>
+                                                    <% @manu_taxon.map do |k|%>
+
+                                                            <li>
+
+                                                             <%=link_to k.sub_cat_name,products_manu_category_path(k.id)%>
+
+                                                            </li>
+
+                                                    <%end%>
+                                        
+                                                </ul>
+                                        
+                                            </div>
+
+                                           <div class="clearfix"></div>
+                                   
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                               
+                                    </div>
+                            
+                           <%end%>
+                           
+                           <div class="clearfix"></div>
+                            
+                        </div>
+
+                	    <div class="clearfix"></div>
+
+                    <%else%>
+                    
+
+                        <h5 style="color:rgb(52, 61, 70)"><%= page_entries_info @product%></h5> 
+
+                        <div class="row">
+
+                            <center><%= will_paginate @product %></center>
+
+
+                            <div class="col-md-12">
+          
+                                <div class="compare-table">
+             
+                                    <table class="table">
+
+                                        <thead>
+
+                                            <tr>
+
+                                                <th>Image</th>
+        
+                                                <th>Item ID</th>
+                   
+                                                <th>Product Name</th>
+        
+                                                <th>Description</th>
+                        
+                                                <th>
+
+                                                 <form controller="products" action="manu_category_compare" accept-charset="UTF-8" method="post" name="form1" onsubmit="return validate()">
+
+                                                            
+                                                 <button class="btn btn-block btn-default hvr-sweep-to-right" type="submit"><i class="fa fa-balance-scale" aria-hidden="true"></i> Compare</button>
+
+                                                </th>
+          
+                                         
+                                            </tr>
+
+                                        </thead>
+
+                                       <tbody>
+
+                                            <%@product.uniq.to_a.each do |i|%>
+
+                                                <tr>
+
+                                                    <%@im= i.image[0] %>
+
+                                                    <td>
+
+                                                        <%if @im.blank?%>
+
+                                                           <img src="/assets/not.jpeg" alt="Image not available">
+
+                                                        <%else%>
+
+                                                            <%=image_tag @im %>
+
+                                                        <%end%>
+
+                                                    </td>
+
+                                                    <td><%= i.item_id %></td>
+
+                                                    <td><%= i.product_name %></td>
+
+                                                    <td><%= link_to i.glo_desc,products_manu_category_desc_path(i)%></td>
+
+                                                    <td><%= check_box_tag("is[]",i.id, false,{:onclick=>"chkcontrol();"})%>
+
+                                                 </tr>   
+
+                                            <%end%>
+
+
+                                        </tbody>
+
+                                    </table>
+
+
+                                </div>
+
+                            </div>
+
+                            <center><%= will_paginate @product %></center>
+
+                       
+                        </div>
+
+                    
+                    <%end%>
+                
+                </div>
+               
+               <div class="clearfix"></div> 
+            
+            </div>
+            
+            <div class="clearfix"></div> 
+            
+    </div>
+            
+    <div class="clearfix"></div> 
+            
+</div>
+           
+<script language="javascript">
+
+ function validate()
+
+ { var chks = document.getElementsByName('is[]');
+
+ var checkCount = 0;
+
+ for (var i = 0; i < chks.length; i++)
+
+ { if (chks[i].checked)
+
+ { checkCount++; } }
+
+ if (checkCount < 2)
+
+ { alert("Please Select at least two.");
+
+ return false; }
+
+ else if (checkCount > 4) {
+
+ alert("Select Only four");
+
+ return false; }
+
+ else { return true; } }
+
+</script>

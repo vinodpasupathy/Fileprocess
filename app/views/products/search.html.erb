@@ -1,0 +1,62 @@
+<div class="body-wrap">
+  <div class="body-container">
+    <div class="body-header">
+
+    You searched for "<%= @search %>"
+      <!--%=$taxon_name.pluck(:main_cat_name)[0]><=$manu%-->
+    </div>
+    <div class="body-content">
+      <div class="container">
+        <div class="row">
+           
+          <center><%= will_paginate @product %></center>
+
+
+          <div class="col-md-12">
+            <div class="compare-table">
+           <%unless @product.blank?%>
+              <table class="table">
+                <thead>
+                  <tr>
+                     <th>Image</th>
+                     <th>Item ID</th>
+                     <th>Product Name</th>
+                     <th>Description</th>
+                     <th> 
+                     <form controller="products" action="manu_index_product_compare" accept-charset="UTF-8" method="post" name="form1" onsubmit="return validate()">
+                     <button class="btn btn-block btn-default hvr-sweep-to-right" type="submit"><img src="/assets/compare-icon.png"> Compare</button></th>
+                  </tr>
+                </thead>
+                 <%@product.each do |p|%>
+                 <tr class="odd">
+                  <% @img=p.image[0]%>
+                   <%if @img.blank?%>
+                      <td><img src="/assets/not.jpeg" alt="Image not available"></td>
+                   <%else%>
+                       <td><%=image_tag @img%></td>
+                   <%end%>
+                   <td><%=p.item_id%></td>
+                   <td><%=p.product_name%></td>
+                   <td><%=link_to p.glo_desc,products_manu_index_product_desc_path(p)%></td>
+                   <td><%= check_box_tag("is[]", p, false,{:onclick=>"chkcontrol();"})%></td>
+                 <tr>
+                 <%end%>
+              </table>
+              <%else%>
+
+               <b><h3 style="color:red;">"NO ENTRIES FOUND"</h3></b>
+             <%end%>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="clearfix"></div>
+          <center><%= will_paginate @product %></center>
+        </div>
+        <div class="clearfix"></div> 
+      </div>
+      <div class="clearfix"></div> 
+    </div>
+    <div class="clearfix"></div> 
+  </div>
+  <div class="clearfix"></div> 
+</div>

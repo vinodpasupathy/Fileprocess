@@ -1,0 +1,288 @@
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style>
+
+  a:hover{ color:aqua;}
+
+
+  .nav-tabs > li.active > a:hover {
+    color: white!important;
+    cursor: default;
+    background-color: #06ADC3 !important;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    color: white!important;
+    cursor: default;
+    background-color: #06adc3;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+</style>
+
+
+<style>
+
+
+.transition {
+    -webkit-transform: scale(1.6); 
+    -moz-transform: scale(1.6);
+    -o-transform: scale(1.6);
+    transform: scale(1.6);
+}
+#content {
+  -webkit-transition: all .4s ease-in-out;
+  -moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -ms-transition: all .4s ease-in-out;
+}
+
+#content {
+    width:220px;
+    margin:30px;
+}
+
+</style>
+
+<div class="body-wrap">
+
+<div class="body-container">
+
+    <div class="body-header">
+      
+      <%=$taxon_name.pluck(:main_cat_name)[0]%>-<%=$manu%>
+  
+     </div>
+
+<div class="body-content">
+
+<div class="container">
+
+<div class="row">
+
+<div class="col-md-12">
+
+   <ol class="breadcrumb">
+
+
+   </ol>
+
+</div>
+
+<div class="clearfix"></div>
+
+      <div class="container">
+
+        <div style="background-color: rgb(36, 45, 53);" class="mm">
+     
+          <ul class="nav nav-tabs">
+    
+             <li class="active"><a href="#OverView">OverView</a></li>
+       
+             <li><a href="#menu1">Specifications</a></li>
+       
+             <li><a href="#menu2">Media</a></li>
+          
+          </ul>
+
+        </div>
+
+  <div class="tab-content">
+    
+     <div id="OverView" class="tab-pane fade in active">
+     
+      <p>
+
+        <%@product.map do |i|%>
+         
+          <div class="pname">
+      
+           <b><%=i.product_name%></b>
+       
+           </div>
+
+      <div class="table- responsive ">                
+
+        <table class="table">
+         
+         <tbody>
+
+         <tr>
+
+
+         <td><%=i.product_name%></td>
+
+
+          </tr>
+       
+          </tbody>
+          
+          </table>
+         
+          </div>
+
+         <div class="table-responsive">                    
+ <table><tr><td>
+
+            <%@img=i.image[0]%>
+        
+            <%if @img.blank?%>
+
+            <img src="/assets/nn.jpeg" alt="Image not available">
+
+            <%else%>
+
+            <%=image_tag @img,:id=>"content",:style=>"margin-left:25%;"%>
+
+             <%end%> </td><td>
+
+             <img src="/assets/not.jpeg" alt="Logo not available" style="margin-left:25%">
+
+             </td></tr></table>
+
+          </div>
+
+          <table class="table" >
+
+          <tbody>
+
+          <tr><h5 style="color: rgb(0, 0, 0); font-size: large;">Related Products</h5></tr>
+         
+          <tr style="color: rgb(255, 253, 253); background-color: rgb(6, 173, 195);">
+
+           <th><b><center>Item ID</center></b></th>
+           <th><b><center>Product Name</center></b></th>
+           <th><b><center>Description</center></b></th>
+      
+          </tr>
+         
+           <%@related.map do |a|%>
+
+            <tr style="color: black;">
+          
+              <td><%=link_to a.item_id,products_manu_index_product_desc_path(i)%></td>
+              <td><%=a.product_name%></td>
+              <td><%=a.glo_desc%></td>
+
+            </tr>
+
+            <%end%>
+
+           </tbody>
+    
+         </table>
+
+       </p>
+  </div>
+
+
+<div id="menu1" class="tab-pane fade">
+   <p>
+       <div class="pname">
+       
+          <b><%=i.product_name%></b>
+         
+        </div>
+
+          <div style="Times New Roman&quot;;" class="table- responsive ">                
+         <table class="table">
+         <tbody>
+          <tr>
+          
+          <td><%=i.product_name%><td>
+          
+          </tr>
+          </tbody>
+          </table>
+       </div>
+
+
+    <div style="Times New Roman&quot;;" class="table-responsive">          
+    <table class="table">
+    <tbody>
+     <%i.property.each do|prop|%>
+      <tr><td><%=prop[0]%><td><td><%=prop[1]%><td></tr>
+      <%end%>
+     
+    </tbody>
+    </table>
+    </div>
+   </p>
+  </div>
+ 
+
+ <div id="menu2" class="tab-pane fade">
+
+  <p>
+  
+
+    <div class="pname">
+         
+      <b><%=i.product_name%></b>
+  
+    </div>
+
+    <div style="Times New Roman&quot;;" class="table- responsive ">                
+
+     <table class="table">
+
+     <tbody>
+        
+       
+      <tr><td><%=i.product_name%><td></tr>
+     </tbody>
+     
+     </table>
+     
+     </div>
+      
+
+
+  <div style="Times New Roman&quot;;" class="table-responsive">  
+    <%@links=[i.html,i.pdf].flatten%>
+  <table class="table">
+    <tbody>
+      <%@links.each do|li|%>
+     <tr><td><a><%=link_to li,li%></a></td></tr>
+      <%end%>
+     </tr>
+    </tbody>
+  </table>
+  </div>
+  </p>
+</div>
+<%end%>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+ </body>
+</html>
+
+
+
+
+<script>
+$(document).ready(function(){
+    $(".nav-tabs a").click(function(){
+        $(this).tab('show');
+    });
+});
+</script>
+
+<script>
+$(document).ready(function(){
+    $('#content').hover(function() {
+        $("#content").addClass('transition');
+    
+    }, function() {
+        $("#content").removeClass('transition');
+    });
+});
+
+</script>

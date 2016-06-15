@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  manu_name: MyString
+  manu_logo: MyString
+  taxon_id: MyString
+
+two:
+  manu_name: MyString
+  manu_logo: MyString
+  taxon_id: MyString

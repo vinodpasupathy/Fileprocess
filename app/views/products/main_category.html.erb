@@ -1,0 +1,85 @@
+<div class="body-wrap">
+               
+    <div class="body-container">
+    
+        <div class="body-header">Product Catalog</div>
+
+            <div class="body-content">
+            
+                <div class="container">
+
+                    <div class="row">
+
+
+                        <%@taxon.order("main_cat_name ASC").map do | i | %>
+            
+                        <div class="col-md-4 col-sm-6">
+            
+                            <div class="product-container">
+
+                                
+                                    <div class="header"><%=i.main_cat_name%></div>
+                                    
+                                
+
+                                        <div class="image">
+
+                                           <%@im=Product.where(:taxon_id=>i.id).pluck(:image).flatten[0]%>
+
+                                           <%if @im.blank?%>
+
+                                              <img src="/assets/not.png" alt="Image not available">
+
+                                            <%else%>
+
+                                                <%=image_tag @im %>
+
+                                            <%end%>
+
+                                        </div>
+                                   
+                                        <%= form_tag({ controller: 'products', action: 'sub_category'}, method: 'get') do %>
+
+                                        <div class="content">
+                                        
+                                            <div class="form-group ">
+                                            
+                                                <label>Select Category</label>
+                                                
+                                                <%= select_tag "id",options_from_collection_for_select(Taxonomy.order("sub_cat_name ASC").where(:parent_id=>i.id), "id", "sub_cat_name"),{:include_blank=>"Select Option",:class=>"form-control",:required=>"true"}%>
+                                                
+                                            </div>        
+                                                                      
+                                            <button class="btn btn-block btn-default hvr-sweep-to-right"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i> View Product</button>                                     
+                                        
+                                        </div>
+
+                                        
+                                  
+                                    <div class="clearfix"></div>
+   
+                                <%end%>
+                                
+                            </div>
+                            
+                        </div>
+
+                        <%end%>
+                        
+                    </div>
+
+                    
+                    
+                </div>
+                 
+              <div class="clearfix"></div>
+                            
+            </div>
+            
+        <div class="clearfix"></div>
+            
+    </div>
+    
+   <div class="clearfix"></div> 
+
+</div>

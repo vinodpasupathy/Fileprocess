@@ -1,0 +1,38 @@
+<div class='menu' style='display: none'>
+
+  <span id="btnHide" style="left:97%; position:relative;"><i class="fa fa-close"></i></span>
+
+<center>  <%=image_tag("/assets/logo.png" )%></center><br>
+
+<center><table>
+
+<%= form_for :user,   :url=>{:controller=>"products", :action => "validate_login"} do | i |%> 
+<tr>
+<td style="text-align:center;"><%= i.label :name,"Username" %></td>
+<td ><%= i.text_field :name,:required=>"true" %></td>
+</tr>
+
+<tr>
+<td style="text-align:center;"><%= i.label :password%></td>
+<td><%= i.password_field :password,:required=>"true" %></td>
+</tr>
+
+
+
+<tr>
+<td><%= i.submit "Sign_In",:class=>"btn btn-primary"%></td>
+</tr>
+<% end %>
+</table></center>
+
+<script>
+$(document).ready(function(){
+    $('#btnShow').click(function(){
+        $('.menu').show().css("top", "300px").animate({top: 250}, 200);
+    });
+  
+    $('#btnHide').click(function(){
+        $('.menu').hide();
+    });
+});
+</script>

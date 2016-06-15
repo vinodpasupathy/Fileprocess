@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ProductCatalog</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+</head>
+
+<body>
+  
+  <div class="login-back">
+  
+  <div class="container-fluid">
+  
+  <div class="row">
+  
+  <div class="col-md-12 logo-back">
+  
+          <div class="logo">
+  
+            <%= link_to image_tag("/assets/logo.png"),products_import_path,:title=>"Back To import..." %>
+  
+          </div>
+
+          <% if flash[:notice] %>
+
+          <div style="color: red;" class="alert alert"><%= flash[:notice]%></div>
+
+          <% end %>
+   
+          <div class="login-container">
+   
+                <h1>Welcome!</h1>
+   
+                <p>to Altius product catolog</p>
+   
+ <div class="logform">
+
+<%=form_for [@user],:url=>{:controller=>"products",:action=>"create",:method=>"post"} do |i| %>
+                 
+<%= i.text_field:name,:class=>"form-control",:placeholder=>"User Name",:autofocus=>"true",:title=>"Enter Your Name...."%><br>
+
+<%= i.password_field:email,:class=>"form-control",:placeholder=>"E-Mail",:title=>"Enter Your E-mail..."%><br>
+
+<%= i.password_field:password,:name=>"password",:class=>"form-control",:placeholder=>"password",:title=>"Enter Your Password"%><br>
+
+<button class="btn btn-default logbutton hvr-sweep-to-right" type="login" ><i class="fa fa-user-plus"></i>New User</button><br>
+   
+<div class="clearfix"></div>
+   
+</div>
+
+<%end%>
+
+<div class="clearfix"></div>
+            
+</div>
+
+</div>
+  
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

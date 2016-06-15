@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sub_cat_name: MyString
+  parent_id: MyString
+  taxon_id: MyString
+
+two:
+  sub_cat_name: MyString
+  parent_id: MyString
+  taxon_id: MyString

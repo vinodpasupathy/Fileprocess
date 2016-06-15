@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Product Catalog</title>
+  <link href="/assets/logo 1.png" rel="shortcut icon" type="image/x-icon"/>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Altius Product Catalog</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+  </head>
+  <style>
+
+.menu {
+ float: right;
+ position: absolute;
+border: 1px solid #b6acac;
+background: #fff;
+left: 29%;
+width: 40%;
+padding: 12px;
+border-radius: 10px;
+cursor: pointer;
+}
+
+</style>
+
+
+  <body>
+  <div id="header-container">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+                <div class="left-container">
+                    <div class="menu-icon">
+<i class="fa fa-outdent" aria-hidden="true" style="font-size: 33px; color: rgb(6, 173, 195);"></i>
+                    </div>
+                    <div class="search-box">
+                        <div class="form-group">
+                          <%= form_tag(action: "search", :method => "get", id: "search-form") do %>
+                    <input id="search" name="search"  class="form-control" type="text" placeholder="Search" title="Search Your Product">
+                                <button class="btn btn-block btn-default" >
+                                    <i style="color: white;" class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                                <%end%>
+                        </div>
+                    </div>
+                </div>
+                <div class="logo-container">
+                    <%= link_to image_tag("/assets/logo.png"),root_path,:title=>"Goto Home..." %>
+                </div>
+                <div class="right-container">
+                     
+<button id="btnShow" class="btn btn-block btn-default hvr-sweep-to-right" title="Login"><i class="fa fa-key" aria-hidden="true"></i> Login</button>
+                                               
+                </div>
+            
+        </div>
+    </div>
+  </div>
+  </div>
+    
+
+<div class="container-fluid">
+    <div class="row  wrapper">
+   <%@pa=params[:id] || params[:format] %>
+
+              <%unless @pa == nil%>
+
+                <%@paq=BSON::ObjectId.from_string(@pa)%>
+              
+              <%end%>
+              
+              <%unless Product.where(:taxonomy_id=>@paq).present?%>
+            <div class="sidebar">
+            
+            <div id="scroll">
+            <div class="panel-collapse  panel-scroll" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="fa fa-th-large" aria-hidden="true" style="font-size:20px"></i> Categories </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul>
+                                 <%@taxon=Taxon.all%>
+                                 <%@taxon.order("main_cat_name ASC").map do |i|%>
+                                <li><%= link_to i.main_cat_name,products_sub_category_path(i) %> </li>
+                                  <%end%>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><i style="font-size: 20px;" class="fa fa-fort-awesome" aria-hidden="true"></i> Manufacturer</a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                            <ul>
+                                <%@manufacture=Manufacture.all%>
+                                <%@manufacture.order("manu_name ASC").map do |i|%>
+                                  <li><%=link_to i.manu_name,products_manu_category_path(i) %></li>                                                           
+                                  <%end%>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href="/products/manu_index_category"><i style="font-size: 20px;" class="fa fa-cogs" aria-hidden="true"></i> View Manufaturers Index</a>
+                        </h4>
+                    </div>
+                    </div>
+                
+             <div class="follow-container">Follow Us on
+            <div class="social">
+    <a target="_blank" href="https://www.facebook.com/" ><i class="fa fa-facebook" title="Facebook"></i></a>
+    <a target="_blank" href="https://www.twitter.com/" ><i class="fa fa-twitter" aria-hidden="true" title="Twitter"></i></a>
+     <a target="_blank" href="https://www.google-plus.com/" ><i class="fa fa-google-plus" aria-hidden="true" title="Google-Plus"></i></a>
+        <a target="_blank" href="https://www.pinterest.com/" ><i class="fa fa-pinterest" aria-hidden="true" title="Pinterest"></i></a>
+        <a target="_blank" href="https://www.envelope.com/" ><i class="fa fa-envelope" aria-hidden="true" title="Envelope"></i></a>
+         <a target="_blank" href="https://www.linkedin.com/" ><i class="fa fa-linkedin" aria-hidden="true" title="linkedin"></i></a>
+                   </div><!--close social -->  
+                   <div class="clearfix"></div>
+                 </div><!--close  follow -->
+                 <div class="footer-container">
+                © 2016 Altiusproductcatalog.com
+                <a target="_blank" href="https://www.altiustechnology.com/" >All rights reserved.</a>
+                <div class="clearfix"></div>
+                </div><!--close footer -->
+                
+                                <div class="clearfix"></div>
+            </div>
+            
+            </div>
+            
+                
+                <div class="clearfix"></div>
+            </div>
+            
+            
+               <div class="clearfix"></div>
+
+<%else%>
+  
+  <div class="filterbar">
+            <div class="headbar">
+              Filter By  <button class="btn btn-block btn-default hvr-sweep-to-right">Apply</button>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+            <div id="scroll">
+            <div class="panel-collapse  panel-scroll" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><img src="/assets/category-icon.png"> Type</a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <ul>
+                              <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><img src="/assets/manu-icon.png"> Environmental Resistance Features</a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                          <ul>
+                              <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><img src="/assets/eenv-friend-icon.png"> Environmental Friendly</a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                          <ul>
+                              <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4"><img src="/assets/class-icon.png"> Class</a>
+                        </h4>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                          <ul>
+                              <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse5"><img src="/assets/capacity-icon.png"> Absorbency Capacity</a>
+                        </h4>
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                          <ul>
+                              <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse6"><img src="/assets/recycle-icon.png"> Contains Recycled Content?</a>
+                        </h4>
+                    </div>
+                    <div id="collapse6" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                          <ul>
+                              <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse7"><img src="/assets/primary-icon.png"> Primary Noun, Basic Function</a>
+                        </h4>
+                    </div>
+                    <div id="collapse7" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                          <ul>
+                              <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse8"><img src="/assets/lenght-icon.png"> Length</a>
+                        </h4>
+                    </div>
+                    <div id="collapse8" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                          <ul>
+                              <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse9"><img src="/assets/diameter-icon.png"> Diameter</a>
+                        </h4>
+                    </div>
+                    <div id="collapse9" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                          <ul>
+                              <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse10"><img src="/assets/color-icon.png"> Color</a>
+                        </h4>
+                    </div>
+                    <div id="collapse10" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                          <ul>
+                              <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse11"><img src="/assets/percent-icon.png"> Percent Recycled Content</a>
+                        </h4>
+                    </div>
+                    <div id="collapse11" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                          <ul>
+                              <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse12"><img src="/assets/material-icon.png"> Material Texture Features</a>
+                        </h4>
+                    </div>
+                    <div id="collapse12" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                          <ul>
+                              <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                                <li><div class="checkbox"><label><input type="checkbox">Checkbox 1</label></div></li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+              
+                 <div class="choose-container">
+                   <button class="btn btn-block btn-default hvr-sweep-to-right">Choose Another Category</button>
+               </div>
+                
+                          <div class="clearfix"></div>
+            </div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            </div>
+            
+              
+          <div class="clearfix"></div>
+        </div>
+          <%end%>
+    </div>
+    <div class="clearfix"></div>
+</div>
+    
+
+
+<%= yield %>
+</body>
+</html>
+
+
+
+
+<div class='menu' style='display: none'>
+
+
+  <span id="btnHide" style="left:97%; position:relative;"><i class="fa fa-close"></i></span>
+
+
+<center>  <%=image_tag("/assets/logo.png" )%></center><br>
+
+<center><table>
+
+<%= form_for :user,   :url=>{:controller=>"products", :action => "validate_login"} do | i |%> 
+<tr>
+<td style="text-align:center;"><%= i.label :name,"Username" %></td>
+<td ><%= i.text_field :name,:require=>true %></td>
+</tr>
+
+<tr>
+<td style="text-align:center;"><%= i.label :password%></td>
+<td><%= i.password_field :password,:require=>true %></td>
+</tr>
+
+
+
+<tr>
+<td><%= i.submit "Sign_In",:class=>"btn btn-primary"%></td>
+</tr>
+<% end %>
+</table></center>
+
+
+<script>
+$(document).ready(function(){
+    $('#btnShow').click(function(){
+        $('.menu').show().css("top", "300px").animate({top: 250}, 200);
+    });
+  
+    $('#btnHide').click(function(){
+        $('.menu').hide();
+    });
+});
+</script>
+
+
+<script>
+$(".menu-icon").click(function(){
+    $(".sidebar").toggleClass("show-nav");
+  $(".body-wrap").toggleClass("full-width");  
+}); 
+</script>

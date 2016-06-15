@@ -1,0 +1,118 @@
+
+
+<div class="body-wrap">
+
+  <div class="body-container">
+
+    <div class="body-header">Product Compare</div>
+
+      <div class="body-content">
+    
+        <div class="container">
+    
+          <div class="row">
+      
+            <div class="col-md-12">
+      
+              <div class="product-compare">
+      
+                <table class="table">
+
+                  <i class="fa fa-dot-circle-o" style="font-size: 15px; color: rgb(0, 102, 255);"></i>&nbsp;Indicates product differences.<br><br>
+
+                   <thead>
+
+                    <%t=1%>
+
+                      <%@names.each do |i|%>
+
+                        <tr>
+
+                          <%if t < 5 %>
+
+                            <td></td>
+
+                              <%@pros.each do |p|%>
+
+                                <%if t == 1 %>
+                                                                   
+                                  <%@temp=Manufacture.where(:id=>BSON::ObjectId.from_string(Product.where(:id=>p.id).pluck(:manu_id)[0])).pluck(i.to_sym)[0]%>
+
+                                  <td><strong><%=@temp%></strong></td>
+
+                                <%elsif t == 4%>
+
+                                  <td><%=image_tag p.image[0]%></td>    
+
+                                <%elsif t == 2%>
+                                                                   
+                                 <td><%= link_to Product.where(:id=>p.id).pluck(i.to_sym)[0],products_manu_index_product_desc_path(p.id)%></td>
+                                 <%else%>
+                                  <td><%=Product.where(:id=>p.id).pluck(i.to_sym)[0]%></td>
+                                <%end%>
+                                
+                              <%end%>
+
+                      </thead>     
+                              
+                          <%else%>
+                          
+                          <tbody>
+
+                            <%@pp=[]%>
+
+                         <%@pros.each{|l| @pp << Product.where(:id=>l.id).pluck(:property)[0][i]}%>
+
+                            <%if @pp.uniq.count > 1%>
+
+                             <td><i class="fa fa-dot-circle-o" style="font-size: 15px; color: rgb(0, 102, 255);"></i>&nbsp;<%=i%></td> 
+
+                          <%else%>
+
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=i%></td>
+
+                          <%end%>
+                          
+                              <%@pros.each do |p|%>
+
+                                <%@temp=Product.where(:id=>p.id).pluck(:property)[0]%>
+
+                                <%if @pp.uniq.count > 1%>
+                                <td style="color: rgb(0, 102, 255);"><%=@temp[i]%></td>
+                                <%else%>
+                                <td><%=@temp[i]%></td>
+
+                                <%end%>
+                              <%end%>
+
+                          <%end%>
+
+                        </tr>
+                        
+                        <%t=t+1%>
+                        
+                      <%end%>
+                                              
+                   </tbody>
+                  
+                </table>
+                
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+                        
+       <div class="clearfix"></div>
+                           
+      </div>
+
+    <div class="clearfix"></div>
+
+  </div>
+ 
+ <div class="clearfix"></div> 
+
+</div>

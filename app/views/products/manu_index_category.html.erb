@@ -1,0 +1,56 @@
+<div class="body-wrap">
+
+    <div class="body-container">
+
+        <div class="body-header">Manufatures Index</div>
+                    
+            <div class="body-content">
+            
+                <div class="container">
+            
+                    <div class="row">
+            
+                        <div class="col-md-12">
+            
+                            <span class="sub-title">Please choose a product category to view the manufacturers in that category. </span>
+            
+                        </div>
+            
+                    </div>
+            
+                    <div class="row">
+            
+                     <%@taxon.order("main_cat_name ASC").map do |i|%>
+
+            
+                            <div class="col-md-6">
+            
+                                <div class="manufacture-index hvr-sweep-to-right">  
+               
+                                    <%=link_to i.main_cat_name,products_manu_index_sub_category_path(i) %>
+               
+                                </div>
+               
+                                <div class="clearfix"></div>
+               
+                            </div>
+               
+                        <%end%>
+                        
+                      <div class="clearfix"></div>
+                        
+                    </div>
+                    
+                </div>
+                
+              <div class="clearfix"></div>
+                
+            </div>
+            
+        <div class="clearfix"></div>
+            
+    </div>
+    
+  <div class="clearfix"></div> 
+    
+</div>

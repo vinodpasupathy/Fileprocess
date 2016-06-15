@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  i_id: MyString
+  glo_desc: MyString
+  product_name: MyString
+  mp_number: MyString
+  taxon_id: MyString
+  taxonomy_id: MyString
+  manu_id: MyString
+  sku_id: MyString
+  html: MyString
+  pdf: MyString
+  image: MyString
+  d_long: MyString
+  d_short: MyString
+  d_bullet: MyString
+  d_copy: MyString
+  property: MyString
+
+two:
+  i_id: MyString
+  glo_desc: MyString
+  product_name: MyString
+  mp_number: MyString
+  taxon_id: MyString
+  taxonomy_id: MyString
+  manu_id: MyString
+  sku_id: MyString
+  html: MyString
+  pdf: MyString
+  image: MyString
+  d_long: MyString
+  d_short: MyString
+  d_bullet: MyString
+  d_copy: MyString
+  property: MyString
